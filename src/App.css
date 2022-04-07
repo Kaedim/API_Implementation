@@ -14,16 +14,44 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #e8e8e8;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
+  color: black;
+}
+
+.button_row {
+  display: flex;
+  width: 90vw;
+  height: 20vh;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.button {
+  background-color: #f89132;
+  border-radius: 0.75rem;
+  border: 0;
+  padding: 0.5rem;
+  font-size: 1.125rem;
   color: white;
 }
 
+.image {
+  max-height: 20vh;
+  max-width: 20vw;
+}
+.image_layout {
+  display: flex;
+  flex-direction: wrap;
+  align-items: center;
+  justify-content: center;
+}
 .App-link {
   color: #61dafb;
 }
