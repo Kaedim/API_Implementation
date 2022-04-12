@@ -1,4 +1,4 @@
-const REACT_APP_KAEDIM_API = "https://api.kaedim.com/";
+const REACT_APP_KAEDIM_API = "https://api.kaedim3d.com/";
 const devID = "fd85c6d33...";
 const APIkey = "...";
 const refreshToken = "17f9e60d00d469a...";
