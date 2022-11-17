@@ -3,22 +3,22 @@ const cors = require("cors");
 const express = require("express");
 const fetch = require("node-fetch");
 const FormData = require("form-data");
-const {Readable} = require("stream");
+const { Readable } = require("stream");
 // import fetch from "node-fetch";
 const app = express();
 app.use(express.static("public"));
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(
   cors({
     origin: "*",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
-  }),
+  })
 );
 var crypto = require("crypto");
 
-const upload = multer({storage: multer.memoryStorage(), preservePath: true});
+const upload = multer({ storage: multer.memoryStorage(), preservePath: true });
 
 // app.post("/webhook", (request, response) => {
 //   const secret = "6deb2a5...";
@@ -75,7 +75,7 @@ app.post("/process", upload.any("image"), async (req, res, next) => {
         filename: req.file.originalname,
       });
     }
-    const results = await fetch("https://staging.kaedim3d.com/api/v1/process", {
+    const results = await fetch("https://api.kaedim3d.com/api/v1/process", {
       method: "POST",
       body: formData,
       headers: {
@@ -96,18 +96,15 @@ app.post("/refreshJWT", async (req, res, next) => {
     const body = {
       devID: req.body.devID,
     };
-    const results = await fetch(
-      "https://staging.kaedim3d.com/api/v1/refreshJWT",
-      {
-        method: "POST",
-        body: JSON.stringify(body),
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": req.body.APIkey,
-          "refresh-token": req.body.refreshToken,
-        },
+    const results = await fetch("https://api.kaedim3d.com/api/v1/refreshJWT", {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": req.body.APIkey,
+        "refresh-token": req.body.refreshToken,
       },
-    );
+    });
     const data = await results.json();
     res.status(200).json(data);
 
@@ -124,7 +121,7 @@ app.post("/registerHook", async (req, res, next) => {
       destination: req.body.destination,
     };
     const results = await fetch(
-      "https://staging.kaedim3d.com/v1/registerHook",
+      "https://api.kaedim3d.com/api/v1/registerHook",
       {
         method: "POST",
         body: JSON.stringify(body),
@@ -132,7 +129,7 @@ app.post("/registerHook", async (req, res, next) => {
           "Content-Type": "application/json",
           "x-api-key": req.body.APIkey,
         },
-      },
+      }
     );
     const data = await results.json();
     res.status(200).json(data);

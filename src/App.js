@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import ErrorModal from "./components/ErrorModal.jsx";
 import InputArea from "./components/InputArea.jsx";
 
@@ -429,7 +429,7 @@ export default function App() {
               type="checkbox"
               onClick={() => setTest(!test)}
               value={test}
-              disabled={!currentDetails["webhookRegistered"]}
+              // disabled={!currentDetails["webhookRegistered"]}
               // checked={!currentDetails["webhookRegistered"] ? test : false}
             />
             <label htmlFor="test">Test</label>
