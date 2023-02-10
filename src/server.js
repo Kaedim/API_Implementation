@@ -63,6 +63,7 @@ app.post("/process", upload.any("image"), async (req, res, next) => {
     formData.append("devID", req.body.devID);
     formData.append("highDetail", "false");
     formData.append("test", req.body.test);
+    formData.append("LoQ", "standard");
 
     if (req.files && req.files[0]) {
       req.files.forEach((image, index) => {
