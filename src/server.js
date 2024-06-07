@@ -61,7 +61,7 @@ app.post("/process", upload.any("image"), async (req, res, next) => {
     };
     let formData = new FormData();
     formData.append("devID", req.body.devID);
-    formData.append("highDetail", "false");
+    formData.append("polycount", 20000);
     formData.append("test", req.body.test);
     formData.append("LoQ", "standard");
 
