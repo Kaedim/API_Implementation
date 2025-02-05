@@ -3,7 +3,6 @@ const cors = require("cors");
 const express = require("express");
 const fetch = require("node-fetch");
 const FormData = require("form-data");
-const { Readable } = require("stream");
 // import fetch from "node-fetch";
 const app = express();
 app.use(express.static("public"));
@@ -54,16 +53,13 @@ const upload = multer({ storage: multer.memoryStorage(), preservePath: true });
 // route from frontend to request backend
 app.post("/process", upload.any("image"), async (req, res, next) => {
   try {
-    const body = {
-      devID: req.body.devID,
-      highDetail: false,
-      test: req.body.test,
-    };
     let formData = new FormData();
     formData.append("devID", req.body.devID);
     formData.append("polycount", 20000);
+    formData.append("height", 200);
     formData.append("test", req.body.test);
     formData.append("LoQ", "standard");
+    formData.append("projectID", req.body.projectID);
 
     if (req.files && req.files[0]) {
       req.files.forEach((image, index) => {
@@ -75,6 +71,7 @@ app.post("/process", upload.any("image"), async (req, res, next) => {
       formData.append("image", req.file.buffer, {
         filename: req.file.originalname,
       });
+
     }
     const results = await fetch("https://api.kaedim3d.com/api/v1/process", {
       method: "POST",
@@ -107,6 +104,7 @@ app.post("/refreshJWT", async (req, res, next) => {
       },
     });
     const data = await results.json();
+    console.log('refresh data', data);
     res.status(200).json(data);
 
     next();
