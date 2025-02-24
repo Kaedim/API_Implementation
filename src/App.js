@@ -312,7 +312,7 @@ export default function App() {
         <button
           type="button"
           className={`bg-orange-500 hover:bg-orange-400 text-white font-bold py-1 px-2 rounded-sm flex-auto`}
-          onClick={() => {handleDetailSave("projectID"); console.log("projectID", currentDetails["projectID"])}}
+          onClick={() => handleDetailSave("projectID")}
         >
           Save
         </button>

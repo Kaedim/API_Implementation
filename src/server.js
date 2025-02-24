@@ -104,7 +104,6 @@ app.post("/refreshJWT", async (req, res, next) => {
       },
     });
     const data = await results.json();
-    console.log('refresh data', data);
     res.status(200).json(data);
 
     next();
