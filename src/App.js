@@ -190,7 +190,6 @@ export default function App() {
             "jwt",
             data.jwt,
           );
-          console.log("jwt", currentDetails["jwt"]);
           // setJwt(data.jwt);
           // handleDetailSave("jwt");
         }
