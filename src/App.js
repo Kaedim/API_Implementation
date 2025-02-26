@@ -65,7 +65,6 @@ export default function App() {
         ...currentDetails,
         projectID: projectID,
       });
-      console.log("value", value);
     } else if (type === "savedHook") {
       // console.log("savedHook", savedHook);
       localStorage.setItem("savedHook", true);
