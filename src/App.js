@@ -8,8 +8,10 @@ export default function App() {
   const [resetImage, setResetImage] = useState(false);
   const [inputType, setInputType] = useState("single");
   const [devID, setDevID] = useState("");
+  const [projectID, setProjectID] = useState("");
   const [APIkey, setAPIkey] = useState("");
   const [webhook, setWebhook] = useState("");
+  const [refreshToken, setRefreshToken] = useState("");
   const [errorOccurred, setErrorOccurred] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [test, setTest] = useState(false);
@@ -21,7 +23,9 @@ export default function App() {
     refreshToken: "",
     jwt: "",
     webhookRegistered: false,
+    projectID: "",
   });
+
 
   async function handleDetailSave(type, value) {
     if (type === "devID") {
@@ -55,6 +59,12 @@ export default function App() {
         ...currentDetails,
         jwt: value,
       });
+    } else if (type === "projectID") {
+      localStorage.setItem("projectID", projectID);
+      setCurrentDetails({
+        ...currentDetails,
+        projectID: projectID,
+      });
     } else if (type === "savedHook") {
       // console.log("savedHook", savedHook);
       localStorage.setItem("savedHook", true);
@@ -83,6 +93,9 @@ export default function App() {
       const localJwt = localStorage.getItem("jwt")
         ? localStorage.getItem("jwt")
         : "";
+      const localProjectID = localStorage.getItem("projectID") 
+        ? localStorage.getItem("projectID") 
+        : "";
       const localSavedHook = localStorage.getItem("savedHook");
       setCurrentDetails({
         devID: localDev,
@@ -91,6 +104,7 @@ export default function App() {
         refreshToken: localRefresh,
         jwt: localJwt,
         webhookRegistered: localSavedHook,
+        projectID: localProjectID,
       });
     }
     return () => {
@@ -122,6 +136,7 @@ export default function App() {
           formData.append("devID", currentDetails["devID"]);
           formData.append("jwt", currentDetails["jwt"]);
           formData.append("test", test);
+          formData.append("projectID", currentDetails["projectID"]);
           if (imgFiles[0]) {
             imgFiles.forEach((image, index) => {
               formData.append(`image-${index}`, image);
@@ -171,10 +186,10 @@ export default function App() {
         const data = await res.json();
         console.log("data", data);
         if (data.status === "success") {
-          handleDetailSave({
-            ...currentDetails,
-            jwt: data.jwt,
-          });
+          handleDetailSave(
+            "jwt",
+            data.jwt,
+          );
           // setJwt(data.jwt);
           // handleDetailSave("jwt");
         }
@@ -283,6 +298,23 @@ export default function App() {
           Save
         </button>
       </div>
+      <div className="flex flex-row gap-2 text-sm items-center">
+        <div className="flex flex-col"> <span>projectID:</span>(optional) </div>
+        <input
+          type="text"
+          className="border border-black focus:outline-none rounded-sm px-2 flex-auto"
+          onChange={(e) => {
+            setProjectID(e.target.value);
+          }}
+        />
+        <button
+          type="button"
+          className={`bg-orange-500 hover:bg-orange-400 text-white font-bold py-1 px-2 rounded-sm flex-auto`}
+          onClick={() => handleDetailSave("projectID")}
+        >
+          Save
+        </button>
+      </div>
       <div className="-ml-4 flex flex-row gap-2 text-sm items-center">
         <div>API key:</div>
         <input
@@ -342,14 +374,14 @@ export default function App() {
         <input
           type="text"
           className="border border-black focus:outline-none rounded-sm px-2"
-          // onChange={(e) => {
-          //   setRefreshToken(e.target.value);
-          // }}
+          onChange={(e) => {
+            setRefreshToken(e.target.value);
+          }}
         />
         <button
           type="button"
           className={`bg-orange-500 hover:bg-orange-400 text-white font-bold py-1 px-2 rounded-sm `}
-          onClick={() => handleDetailSave("refresh")}
+          onClick={() => handleDetailSave("refresh", refreshToken)}
         >
           Save
         </button>
@@ -387,6 +419,14 @@ export default function App() {
             {currentDetails["webhook"] === ""
               ? "missing"
               : currentDetails["webhook"]}
+          </span>
+        </div>
+        <div>
+          projectID:{" "}
+          <span className="text-xs">
+            {currentDetails["projectID"] === ""
+              ? "missing"
+              : currentDetails["projectID"]}
           </span>
         </div>
         <div className="text-ellipsis w-2/3 overflow-hidden whitespace-nowrap">
